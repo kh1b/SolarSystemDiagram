@@ -1,1 +1,224 @@
 @import "tailwindcss";
+
+:root {
+  --space-ink: #050914;
+  --space-amber: #f4b642;
+  --space-amber-soft: #ffd073;
+  --space-text: #e8eefc;
+  --space-dim: #8fa2c6;
+  --space-faint: #5d6c8e;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--space-ink);
+  color: var(--space-text);
+  font-family: "Golos Text", "Segoe UI", sans-serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: "Unbounded", "Golos Text", sans-serif;
+}
+
+/* ---------- outline display line ---------- */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.3px rgba(222, 233, 255, 0.55);
+}
+
+/* ---------- starfield ---------- */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+.tw {
+  animation: twinkle var(--d, 3.4s) ease-in-out infinite;
+  animation-delay: var(--dl, 0s);
+}
+
+/* ---------- sun breathing ---------- */
+@keyframes sunPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scale(1.14);
+    opacity: 1;
+  }
+}
+.sun-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sunPulse 5.2s ease-in-out infinite;
+}
+
+/* ---------- slow spin (reticle + corona dashes) ---------- */
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.reticle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinSlow 16s linear infinite;
+}
+.corona {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinSlow 90s linear infinite reverse;
+}
+
+/* ---------- meteors ---------- */
+.meteor-wrap {
+  position: absolute;
+  pointer-events: none;
+}
+.meteor {
+  width: 150px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(160, 200, 255, 0.35) 55%, transparent);
+  filter: drop-shadow(0 0 6px rgba(170, 205, 255, 0.8));
+  opacity: 0;
+  animation: meteorMove var(--md, 11s) linear infinite;
+  animation-delay: var(--mdl, 4s);
+}
+@keyframes meteorMove {
+  0%,
+  70% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  73% {
+    opacity: 1;
+  }
+  86% {
+    transform: translateX(-58vw);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-58vw);
+    opacity: 0;
+  }
+}
+
+/* ---------- svg labels ---------- */
+.planet-label {
+  font-family: "Golos Text", sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  fill: #c9d7f2;
+  text-anchor: middle;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: rgba(5, 9, 20, 0.85);
+  stroke-width: 3px;
+}
+.belt-label {
+  font-family: "Golos Text", sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  fill: rgba(150, 168, 200, 0.4);
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+/* ---------- hint pulse ---------- */
+@keyframes hintDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(244, 182, 66, 0.55);
+  }
+  60% {
+    box-shadow: 0 0 0 9px rgba(244, 182, 66, 0);
+  }
+}
+.hint-dot {
+  animation: hintDot 1.8s ease-out infinite;
+}
+
+/* ---------- range slider ---------- */
+input[type="range"].speed-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"].speed-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(244, 182, 66, 0.85), rgba(244, 182, 66, 0.16));
+}
+input[type="range"].speed-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: #ffd073;
+  border: 2px solid #0a1122;
+  box-shadow: 0 0 10px rgba(244, 182, 66, 0.7);
+  transition: transform 0.15s ease;
+}
+input[type="range"].speed-range::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+input[type="range"].speed-range::-moz-range-track {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(244, 182, 66, 0.85), rgba(244, 182, 66, 0.16));
+}
+input[type="range"].speed-range::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ffd073;
+  border: 2px solid #0a1122;
+  box-shadow: 0 0 10px rgba(244, 182, 66, 0.7);
+}
+
+/* ---------- panel scrollbar ---------- */
+.panel-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.panel-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.panel-scroll::-webkit-scrollbar-thumb {
+  background: rgba(130, 155, 210, 0.25);
+  border-radius: 4px;
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tw,
+  .sun-pulse,
+  .reticle,
+  .corona,
+  .meteor,
+  .hint-dot {
+    animation: none !important;
+  }
+}
